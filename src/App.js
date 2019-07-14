@@ -6,15 +6,12 @@ import { BrowserRouter as Router, Route, Link} from "react-router-dom";
 
 function App() {
   return (
-    <Router>
-      <div className="jumbotron jumbotron-fluid">
-        <div className="container">
-          <Link to="/">
-            <h1>Adya's Assignments Fall 2019</h1>
-          </Link>
-        </div>   
-      </div>
-
+    <Router>      
+      <nav className="navbar navbar-dark bg-dark sticky-top pt-3 pb-3 mb-5">
+        <a className="navbar-brand" href="http://localhost:3000">
+          Adya's Assignments Fall 2019
+        </a>
+      </nav>
       <div className="container">
         <Route 
           exact path="/" 
