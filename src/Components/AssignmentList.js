@@ -51,14 +51,14 @@ export default class AssignmentList extends Component {
 
   renderAssignmentList() {
     return (
-      this.state.assignments.length < 1 ?
+      <div>
+        <Link to="/add">
+        <button type="button" className="btn btn-success mb-3">
+          <span className="font-weight-bold">+</span> New Assignment
+        </button>
+        </Link>
+        {this.state.assignments.length < 1 ?
         <h4>Congratulations, you don't currently have any assignments!</h4> :
-        <div>
-          <Link to="/add">
-            <button type="button" className="btn btn-success mb-3">
-              <span className="font-weight-bold">+</span> New Assignment
-            </button>
-          </Link>
           <table className="table">
             <thead className="thead-dark">
               <tr>
@@ -72,7 +72,7 @@ export default class AssignmentList extends Component {
               {this.state.assignments.map((assignment) => 
                 <Assignment assignment={assignment} />)}
             </tbody>
-          </table>
+          </table>}
         </div>
     );
   }
