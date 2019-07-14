@@ -7,6 +7,12 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/:id').delete((req, res) => {
+  Assignment.findByIdAndDelete(req.params.id)
+    .then(() => res.json('Successfully deleted assignment')
+    .catch(err => res.status(400).json('Error: ' + err)));
+});
+
 router.route('/add').post((req, res) => {
   const name = req.body.name;
   const description = req.body.description;

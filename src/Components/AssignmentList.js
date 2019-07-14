@@ -11,10 +11,10 @@ const Assignment = (props) => {
       <td>{props.assignment.course}</td>
       <td className="pr-0">
         <div className="d-flex justify-content-between">
-          {props.assignment.deadline}
+          {props.assignment.deadline.substring(0, 10)}
           <div>
             <Link to={`/edit`}><button className="btn btn-sm btn-secondary mr-1">Edit</button></Link>
-            <Link to={`/delete`}><button className="btn btn-sm btn-danger">Delete</button></Link>
+            <button className="btn btn-sm btn-danger" onClick={() => props.handleDelete(props.assignment._id)}>Delete</button>
           </div>
         </div>
       </td>
@@ -28,10 +28,17 @@ export default class AssignmentList extends Component {
 
     this.renderAssignmentList = this.renderAssignmentList.bind(this);
     this.fetchAssignments = this.fetchAssignments.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
 
     this.state = {
       assignments: []
     }
+  }
+
+  handleDelete(id) {
+    axios.delete('http://localhost:8000/'+id)
+      .then(res => console.log(res.data));
+    window.location = '/';
   }
 
   componentDidMount() {
@@ -70,7 +77,11 @@ export default class AssignmentList extends Component {
             </thead>
             <tbody className="table-light">
               {this.state.assignments.map((assignment) => 
-                <Assignment assignment={assignment} />)}
+                <Assignment 
+                  key={assignment._id} 
+                  assignment={assignment}
+                  handleDelete={this.handleDelete}
+                />)}
             </tbody>
           </table>}
         </div>
