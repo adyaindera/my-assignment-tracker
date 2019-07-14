@@ -13,7 +13,7 @@ export default class AddEditAssignment extends Component {
     this.onChangeDeadline = this.onChangeDeadline.bind(this);
 
     this.buttonValue = this.props.isEdit ? 'Edit Assignment' : 'Add Assignment';
-    this.titleValue = this.props.isEdit ? 'Let\'s create a new assignment!' : 'Edit assignment:';
+    this.titleValue = this.props.isEdit ? 'Edit assignment:' : 'Let\'s create a new assignment!';
 
     this.state = {
       name: '',

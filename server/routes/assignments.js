@@ -7,6 +7,27 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/:id').get((req, res) => {
+  Assignment.findById(req.params.id)
+    .then(assignment => res.json(assignment))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+
+router.route('/edit/:id').post((req, res) => {
+  Assignment.findById(req.params.id)
+    .then(assignment => {
+      assignment.name = req.body.name;
+      assignment.description = req.body.description;
+      assignment.course = req.body.course;
+      assignment.deadline = req.body.deadline;
+
+      assignment.save()
+        .then(() => res.json('Assignment is edited'))
+        .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error' + err));
+});
+
 router.route('/:id').delete((req, res) => {
   Assignment.findByIdAndDelete(req.params.id)
     .then(() => res.json('Successfully deleted assignment')
