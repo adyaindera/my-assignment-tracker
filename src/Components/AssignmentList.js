@@ -13,7 +13,7 @@ const Assignment = (props) => {
         <div className="d-flex justify-content-between">
           {props.assignment.deadline.substring(0, 10)}
           <div>
-            <Link to={`/edit`}><button className="btn btn-sm btn-secondary mr-1">Edit</button></Link>
+            <Link to={`/edit/${props.assignment._id}`}><button className="btn btn-sm btn-secondary mr-1">Edit</button></Link>
             <button className="btn btn-sm btn-danger" onClick={() => props.handleDelete(props.assignment._id)}>Delete</button>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default class AssignmentList extends Component {
       })
       .catch(err => {
         console.log('Error: ' + err);
-      })
+      });
   }
 
   renderAssignmentList() {

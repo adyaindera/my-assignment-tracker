@@ -1,7 +1,7 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import AssignmentList from './Components/AssignmentList';
-import AddAssignment from './Components/AddAssignment';
+import AddEditAssignment from './Components/AddEditAssignment';
 import { BrowserRouter as Router, Route, Link} from "react-router-dom";
 
 function App() {
@@ -17,7 +17,11 @@ function App() {
           exact path="/" 
           render={ () => <AssignmentList /> } 
         />
-        <Route path="/add" component={AddAssignment} />
+        <Route path="/add" component={AddEditAssignment} />
+        <Route 
+          path="/edit/:id"
+          render={ (props) => <AddEditAssignment isEdit={true} assignmentId={props.match.params.id}/> }
+        />
       </div>
     </Router>
   );
