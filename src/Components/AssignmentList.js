@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Assignment = (props) => {
   return (
@@ -25,44 +25,63 @@ const Assignment = (props) => {
 export default class AssignmentList extends Component {
   constructor(props) {
     super(props);
-    this.assignmentList = this.assignmentList.bind(this);
+
+    this.renderAssignmentList = this.renderAssignmentList.bind(this);
+    this.fetchAssignments = this.fetchAssignments.bind(this);
+
     this.state = {
-      assignments: this.props.assignments
+      assignments: []
     }
   }
 
-  assignmentList() {
-    return this.state.assignments.length < 1 ?
-      <h4>Congratulations, you don't currently have any assignments!</h4> :
-      <table className="table">
-        <thead className="thead-dark">
-          <tr>
-            <th>Assignment</th>
-            <th>Description</th>
-            <th>Course</th>
-            <th>Deadline</th>
-          </tr>
-        </thead>
-        <tbody className="table-light">
-          {this.state.assignments.map((assignment) => 
-            <Assignment assignment={assignment} />)}
-        </tbody>
-      </table>
+  componentDidMount() {
+    this.fetchAssignments();
+  }
+
+  fetchAssignments () {
+    axios.get('http://localhost:8000/')
+      .then(res => {
+        console.log(res);
+        this.setState({assignments: res.data});
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+      })
+  }
+
+  renderAssignmentList() {
+    return (
+      this.state.assignments.length < 1 ?
+        <h4>Congratulations, you don't currently have any assignments!</h4> :
+        <div>
+          <Link to="/add">
+            <button type="button" className="btn btn-success mb-3">
+              <span className="font-weight-bold">+</span> New Assignment
+            </button>
+          </Link>
+          <table className="table">
+            <thead className="thead-dark">
+              <tr>
+                <th>Assignment</th>
+                <th>Description</th>
+                <th>Course</th>
+                <th>Deadline</th>
+              </tr>
+            </thead>
+            <tbody className="table-light">
+              {this.state.assignments.map((assignment) => 
+                <Assignment assignment={assignment} />)}
+            </tbody>
+          </table>
+        </div>
+    );
   }
 
   render() {
     return (
       <div>
-        {this.assignmentList()}
+        {this.renderAssignmentList()}
       </div>
     );
   }
-}
-
-AssignmentList.propTypes = {
-  assignments: PropTypes.array.isRequired
-}
-
-AssignmentList.defaultProps = {
-  assignments: []
 }
