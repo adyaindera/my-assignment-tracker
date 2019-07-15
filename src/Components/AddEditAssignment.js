@@ -27,7 +27,6 @@ export default class AddEditAssignment extends Component {
     if (this.props.isEdit) {
       axios.get(`http://localhost:8000/${this.props.assignmentId}`)
       .then(res => {
-        console.log(typeof res.data.deadline)
         this.setState( {
           name: res.data.name,
           description: res.data.description,

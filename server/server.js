@@ -14,7 +14,7 @@ const MONGO_URI = process.env.MONGODB_URI;
 mongoose.connect(MONGO_URI, {useNewUrlParser: true});
 const db = mongoose.connection;
 
-// db.on('error', () => console.log('Error connecting to mongodb'));
+db.on('error', () => console.log('Error connecting to mongodb'));
 db.once('open', () => console.log('Connection to mongodb is open!'));
 
 app.use('/', assignments);
