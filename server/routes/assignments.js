@@ -30,8 +30,8 @@ router.route('/edit/:id').post((req, res) => {
 
 router.route('/:id').delete((req, res) => {
   Assignment.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Successfully deleted assignment')
-    .catch(err => res.status(400).json('Error: ' + err)));
+    .then(() => res.json('Successfully deleted assignment'))
+    .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/add').post((req, res) => {
