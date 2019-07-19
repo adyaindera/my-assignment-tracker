@@ -11,7 +11,8 @@ export default class App extends Component {
     this.checkServerConnection = this.checkServerConnection.bind(this);
 
     this.state = {
-      isConnected: true
+      isConnected: true,
+      isLoading: true
     }
   }
 
@@ -22,7 +23,8 @@ export default class App extends Component {
   checkServerConnection() {
     axios.get('http://localhost:8000')
       .then(res => this.setState({isConnected: true}))
-      .catch(err => this.setState({isConnected: false}));
+      .catch(err => this.setState({isConnected: false}))
+      .finally(() => this.setState({isLoading: false}));
   }
 
   render() {
@@ -33,25 +35,27 @@ export default class App extends Component {
             Adya's Assignments Fall 2019
           </a>
         </nav>
-        
-        <div className="container">
-          {!this.state.isConnected ?
-            <div className="p-3 mb-2 bg-danger text-center rounded text-white">
-              <h3>Server not started or DB is not connected!</h3>
-            </div> :
-            <div>
-              <Route 
-                exact path="/" 
-                render={ () => <AssignmentList /> } 
-              />
-              <Route path="/add" component={AddEditAssignment} />
-              <Route 
-                path="/edit/:id"
-                render={ (props) => <AddEditAssignment isEdit={true} assignmentId={props.match.params.id}/> }
-              />
-            </div>
-          }
-        </div>
+        {this.state.isLoading ? 
+          <div></div> :
+          <div className="container">
+            {!this.state.isConnected ?
+              <div className="p-3 mb-2 bg-danger text-center rounded text-white">
+                <h3>Server not started or DB is not connected!</h3>
+              </div> :
+              <div>
+                <Route 
+                  exact path="/" 
+                  render={ () => <AssignmentList /> } 
+                />
+                <Route path="/add" component={AddEditAssignment} />
+                <Route 
+                  path="/edit/:id"
+                  render={ (props) => <AddEditAssignment isEdit={true} assignmentId={props.match.params.id}/> }
+                />
+              </div>
+            }
+          </div>
+        }
       </Router>
     );
   }
