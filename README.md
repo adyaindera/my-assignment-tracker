@@ -1,3 +1,11 @@
+## My Assignment Tracker
+Simple CRUD application to track ongoing class assignments. Built using Node.js, Express.js, React, and MongoDB with Bootstrap.
+
+#### Possible future improvements:
+- Cloud deployment
+- Account authorization
+- Sorting based on priority, class name, etc
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
